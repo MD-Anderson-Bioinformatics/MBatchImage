@@ -1,0 +1,46 @@
+# this is the docker-compose version
+version: '3.0'
+
+# file version 2018-05-22-1300
+
+
+networks:
+    # network for this compose stack
+    mbatchsa_network_external:
+        driver: bridge
+        ipam:
+            config:
+            - subnet: 191.17.4.24/29
+services:
+    mbatchsa_service:
+        # restart this container if it crashes
+        #restart: always
+        build:
+            # build from directory in context and Dockerfile
+            context: .
+            dockerfile: Dockerfile
+        container_name: mbatchsa_cont_external
+        # update :latest to desired version
+        image: mdabcb/mbatchsa_image:2018-05-30-BETA-EXTERNAL
+        networks:
+            - mbatchsa_network_external
+        volumes:
+            # outside access for data files outside:inside
+            - /mbatchsa/MBATCH:/MBATCH
+            - /mbatchsa/WEBSITE:/WEBSITE
+            # read-only file to set time and timezone to same in image as on server
+            - /etc/localtime:/etc/localtime:ro
+            - /etc/localtime:/etc/timezone:ro
+        ports:
+            # (outside)host port:container port(inside) for RStudio
+            - "8787:8787"
+        tty: true
+
+#######################################################################################
+#### notes for starting, stopping, and monitoring during development
+#######################################################################################
+
+
+# docker-compose -p external -f docker-compose.yml up
+# docker-compose -p external -f docker-compose.yml down
+
