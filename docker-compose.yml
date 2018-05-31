@@ -8,9 +8,6 @@ networks:
     # network for this compose stack
     mbatchsa_network_external:
         driver: bridge
-        ipam:
-            config:
-            - subnet: 191.17.4.24/29
 services:
     mbatchsa_service:
         # restart this container if it crashes
