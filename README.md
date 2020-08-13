@@ -1,3 +1,5 @@
+Superseded by https://github.com/MD-Anderson-Bioinformatics/BatchEffectsPackage
+
 # MBatch Stand-Alone Image
 
 This is for educational and research purposes only. 
